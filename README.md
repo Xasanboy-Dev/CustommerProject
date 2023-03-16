@@ -1,4 +1,3 @@
-# CustommerProject
 
 You must be a token for take all users!
 
