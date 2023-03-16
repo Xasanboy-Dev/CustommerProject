@@ -17,4 +17,19 @@ model user {
   number   String @unique
   imageURL String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXPL41UnOVTuYlONpTUTcFbRQJWGwGyrepqQ&usqp=CAU")
   course   String
+  role     Role   @default(user)
+}
+
+model admin {
+  id          Int    @id @default(autoincrement())
+  name        String
+  lastname    String
+  phoneNumber String @unique
+  imageURL    String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXPL41UnOVTuYlONpTUTcFbRQJWGwGyrepqQ&usqp=CAU")
+  role        Role   @default(admin)
+}
+
+enum Role {
+  user
+  admin
 }

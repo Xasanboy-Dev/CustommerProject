@@ -1,0 +1,22 @@
+@url=http://localhost:8080/user
+GET  {{url}}
+x-key:Hello World
+
+###
+POST {{url}}
+Content-Type: application/json
+
+{
+    "name":"Xasanboy",
+    "lastname":"Abdurasulov",
+    "phoneNumber":"+919928473",
+    "course":"Backend"
+}
+
+###
+POST  {{url}}/login 
+Content-Type: application/json
+
+{
+    "phoneNumber":"+919928473"
+}

@@ -1,0 +1,37 @@
+@url=http://localhost:8080/admin
+
+GET {{url}}/login/+91928473
+
+###
+POST {{url}}
+Content-Type: application/json
+x-key:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWGFzYW5ib3kiLCJsYXN0bmFtZSI6IkFiZHVyYXN1bG92IiwicGhvbmVOdW1iZXIiOiIrOTE5OTI4NDczIiwiaWF0IjoxNjc4OTc2NDQ2fQ.yHp6QA4qz7HqIP6A5bB9wET9BK8I9oTPqITyMuO-DNA
+
+{
+    "currentAdminID":1,
+    "name":"Xasanboy",
+    "lastname":"Abdurasulov",
+    "phoneNumber":"+8473"
+}
+###
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "phoneNumber":"+919928473"
+}
+
+###
+GET {{url}}/AllAdmin/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWGFzYW5ib3kiLCJsYXN0bmFtZSI6IkFiZHVyYXN1bG92IiwicGhvbmVOdW1iZXIiOiIrOTE5OTI4NDczIiwiaWF0IjoxNjc4OTc2NDQ2fQ.yHp6QA4qz7HqIP6A5bB9wET9BK8I9oTPqITyMuO-DNA
+
+###
+PUT {{url}}
+x-key:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWGFzYW5ib3kiLCJsYXN0bmFtZSI6IkFiZHVyYXN1bG92IiwicGhvbmVOdW1iZXIiOiIrOTE5OTI4NDczIiwiaWF0IjoxNjc4OTc4MDU3fQ.nXOykdZs5Gk7cOBNkwaNeE5O4O1x5IFxNtbK5WklQYQ
+Content-Type: application/json
+
+{
+    "name":"Jaloladidin",
+    "lastname":"Imomaddinov",
+    "phoneNumber":"+91928473",
+    "AdminID":11
+}
