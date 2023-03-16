@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 import fs from "fs";
 const prisma = new PrismaClient();
 
@@ -46,4 +46,20 @@ export async function deleteAdmin(id: number, imageURL: string) {
 
 export async function getAllAdmins() {
   return await prisma.admin.findMany();
+}
+
+export async function updateUserData(
+  name: string,
+  lastname: string,
+  phoneNumber: string,
+  imageURL: string,
+  id: number,
+  course: string
+) {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: { imageURL, lastname, name, number: phoneNumber, course },
+  });
 }

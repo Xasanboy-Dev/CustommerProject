@@ -7,7 +7,12 @@ import {
   deleteAdmin,
   getAllAdmins,
   updateAdmin,
+  updateUserData,
 } from "../database/admin";
+import {
+  checkUserByPhoneNumber,
+  checkUserExistById,
+} from "../database/user";
 import { Sign, VerifyToken } from "./token";
 
 export async function getAdmin(req: Request, res: Response) {
@@ -186,5 +191,55 @@ export async function findAllAdmin(req: Request, res: Response) {
     }
   } catch (error: any) {
     console.log(error.message);
+  }
+}
+
+export async function editUserDataByAdmin(req: Request, res: Response) {
+  try {
+    const token = req.header("x-key");
+    const { userID } = req.params;
+    if (token) {
+      const ValidateToken = VerifyToken(token);
+      if (ValidateToken) {
+        const user = await checkUserExistById(+userID);
+        if (!user) {
+          return res
+            .status(409)
+            .json({ message: "Pplease check your users's id!" });
+        } else {
+          const { name, lastname, phoneNumber, imageURL, course, role } =
+            req.body;
+          let number: any;
+          if (phoneNumber) {
+            let exist = await checkUserByPhoneNumber(phoneNumber);
+            if (exist) {
+              return res
+                .status(409)
+                .json({ message: "Your phone number is already exist!" });
+            } else {
+              number = phoneNumber;
+            }
+          }
+          const updatedUser = await updateUserData(
+            name ? name : user.name,
+            lastname ? lastname : user.lastname,
+            number ? number : user.number,
+            imageURL ? imageURL : user.imageURL,
+            user.id,
+            course ? course : user.course,
+          );
+          return res
+            .status(200)
+            .json({ message: "Updated sucesfully!", user: updatedUser });
+        }
+      } else {
+        return res.status(401).json({ message: "You must to login!" });
+      }
+    } else {
+      return res.status(401).json({ message: "You must to login!" });
+    }
+  } catch (error: any) {
+    console.log(error.message);
+    res.status(500).json({ message: "Internal error" });
   }
 }

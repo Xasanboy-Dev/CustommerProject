@@ -35,3 +35,13 @@ Content-Type: application/json
     "phoneNumber":"+91928473",
     "AdminID":11
 }
+###
+PUT {{url}}/user/1
+Content-Type: application/json
+x-key:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWGFzYW5ib3kiLCJsYXN0bmFtZSI6IkFiZHVyYXN1bG92IiwicGhvbmVOdW1iZXIiOiIrOTE5OTI4NDczIiwiaWF0IjoxNjc4OTc4MDU3fQ.nXOykdZs5Gk7cOBNkwaNeE5O4O1x5IFxNtbK5WklQYQ
+
+{
+    "name":"Xasanboy",
+    "lastname":"Abdurasulov",
+    "role":"Admin"
+}

@@ -33,3 +33,31 @@ enum Role {
   user
   admin
 }
+
+model course {
+  id          Int       @id @default(autoincrement())
+  name        String
+  createdDate DateTime  @default(now())
+  Datedead    DateTime?
+  teacherID   Int
+  teacherName String
+  pupils      Int[]
+  imageURL    String    @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnIeZDJuGAJH9jtrzTZTSEjojxXXqjt2nVJw&usqp=CAU")
+}
+
+model teacher {
+  id          Int       @id @default(autoincrement())
+  name        String
+  lastname    String
+  phoneNumber String    @unique
+  email       String?
+  createdDate DateTime  @default(now())
+  Datedead    DateTime?
+  lengtWork   Rank      @default(Junior)
+}
+
+enum Rank {
+  Junior
+  Middle
+  Senior
+}
