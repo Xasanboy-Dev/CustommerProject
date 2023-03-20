@@ -11,15 +11,17 @@ datasource db {
 }
 
 model user {
-  id            Int      @id @default(autoincrement())
-  name          String
-  lastname      String
-  email         String
-  phoneNumber   String   @unique
-  role          String[] @default(["user"])
-  lastMessage   String
-  lastMessageID Int
-  messages      Int[]
+  id               Int      @id @default(autoincrement())
+  name             String
+  lastname         String
+  phoneNumber      String   @unique
+  role             String[] @default(["user"])
+  lastMessage      String?
+  lastMessageID    Int?
+  messages         Int[]
+  connectedCourses Int[]
+  connectedChats   Int[]
+  password         String
 }
 
 model message {

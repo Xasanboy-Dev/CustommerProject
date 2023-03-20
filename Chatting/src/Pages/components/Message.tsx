@@ -6,8 +6,9 @@ export default function Message() {
                 <span>Just now</span>
             </div>
             <div className="messageContent">
-                <p>Hello</p>
-                {/* <img src="https://picsum.photos/500/500" /> */}
+                {/* <p>Hello</p> */}
+                <img src="https://picsum.photos/500/500" />
+                <video src="" />
             </div>
         </div>
         
