@@ -11,53 +11,54 @@ datasource db {
 }
 
 model user {
-  id       Int    @id @default(autoincrement())
-  name     String
-  lastname String
-  number   String @unique
-  imageURL String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXPL41UnOVTuYlONpTUTcFbRQJWGwGyrepqQ&usqp=CAU")
-  course   String
-  role     Role   @default(user)
+  id            Int      @id @default(autoincrement())
+  name          String
+  lastname      String
+  email         String
+  phoneNumber   String   @unique
+  role          String[] @default(["user"])
+  lastMessage   String
+  lastMessageID Int
+  messages      Int[]
 }
 
-model admin {
-  id          Int    @id @default(autoincrement())
-  name        String
-  lastname    String
-  phoneNumber String @unique
-  imageURL    String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXPL41UnOVTuYlONpTUTcFbRQJWGwGyrepqQ&usqp=CAU")
-  role        Role   @default(admin)
+model message {
+  id           Int      @id @default(autoincrement())
+  text         String
+  ownerName    String
+  ownerId      Int
+  reciever     Int
+  recieverName String
+  createdDate  DateTime @default(now())
 }
 
-enum Role {
-  user
-  admin
+model chat {
+  id          Int      @id @default(autoincrement())
+  type        Type     @default(chat)
+  users       Int[]
+  messages    String[]
+  createdDate DateTime @default(now())
+}
+
+enum Type {
+  chat
+  group
 }
 
 model course {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
-  createdDate DateTime  @default(now())
-  Datedead    DateTime?
-  teacherID   Int
+  type        Courses  @default(undefined)
   teacherName String
+  teacherId   Int
   pupils      Int[]
-  imageURL    String    @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnIeZDJuGAJH9jtrzTZTSEjojxXXqjt2nVJw&usqp=CAU")
+  createdDate DateTime @default(now())
 }
 
-model teacher {
-  id          Int       @id @default(autoincrement())
-  name        String
-  lastname    String
-  phoneNumber String    @unique
-  email       String?
-  createdDate DateTime  @default(now())
-  Datedead    DateTime?
-  lengtWork   Rank      @default(Junior)
-}
-
-enum Rank {
-  Junior
-  Middle
-  Senior
+enum Courses {
+  Backend
+  Frontend
+  SMM
+  Android
+  undefined
 }

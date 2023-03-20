@@ -1,25 +1,18 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export let url = "http://localhost";
-
 import express from "express";
-import cors from "cors";
 import user from "./../router/user";
-import admin from "./../router/admin";
-import course from "./../router/course";
+import message from "./../router/message";
+import chat from "./../router/chat";
 
 const server = express();
-const PORT = process.env.PORT || 8080;
-
-server.use(cors());
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+const PORT = process.env.PORT;
 
 server.use("/user", user);
-server.use("/admin", admin);
-server.use("/course", course);
+server.use("/message", message);
+server.use("/chat", chat);
 
 server.listen(PORT, () => {
-  console.log(`SERVER: ${url}:${PORT}`);
+  console.log(`SERVER: http://localhost:${PORT}/`);
 });
