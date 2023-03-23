@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Type } from "@prisma/client";
 import { getOneUserById } from "./user";
 const prisma = new PrismaClient();
 
@@ -21,4 +21,12 @@ export async function removeUserFromChat(userID: number, chatID: number) {
       where: { id: chat.id },
     });
   }
+}
+
+export async function createChat(type: Type, users: number[]) {
+  return await prisma.chat.create({ data: { type, users } })
+}
+
+export async function editChat(messages: string, users: number[], id: number) {
+  return await prisma.chat.update({ data: { messages, users }, where: { id } })
 }

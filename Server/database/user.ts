@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { removeUserFromChat } from "./chat";
 import { removeUserFromCourse } from "./course";
 import { removeMessageFromUserId } from "./message";
+import { HashPassword } from "./password";
 
 const prisma = new PrismaClient();
 
@@ -16,17 +17,16 @@ export async function getAllUsers() {
 export async function addUser(
   name: string,
   lastname: string,
-  email: string,
   phoneNumber: string,
   password: string
 ) {
+  let hash = await HashPassword(password)
   return await prisma.user.create({
     data: {
-      email,
       lastname,
       name,
       phoneNumber,
-      password,
+      password: hash,
     },
   });
 }
@@ -35,26 +35,27 @@ export async function editUser(
   id: number,
   name: string,
   lastname: string,
-  email: string,
   phoneNumber: string,
   lastMessage: string,
   lastMessageID: number,
   messages: number[],
-  connectedChats: number[]
+  connectedChats: number[],
+  password: string
 ) {
+  let hash = await HashPassword(password)
   const user = await prisma.user.findUnique({ where: { id } });
   if (user) {
     await prisma.user.update({
       where: { id },
       data: {
         connectedChats,
-        email,
         lastMessage,
         lastMessageID,
         lastname,
         messages,
         name,
         phoneNumber,
+        password: hash
       },
     });
   }
@@ -71,9 +72,11 @@ export async function removeUser(id: number) {
     connectedChats.map(async (id: number) => {
       await removeUserFromChat(user.id, id);
     });
-    let deletedMessages = await removeMessageFromUserId(user.id);
+    await removeMessageFromUserId(user.id);
     return await prisma.user.delete({ where: { id } });
   }
 }
 
-export async function LoginUser(email: string,password:string);
+export async function getUserByPhoneNumber(phoneNumber: string) {
+  return await prisma.user.findUnique({ where: { phoneNumber } })
+}

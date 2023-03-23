@@ -15,7 +15,7 @@ model user {
   name             String
   lastname         String
   phoneNumber      String   @unique
-  role             String[] @default(["user"])
+  role             TypeUser @default(user)
   lastMessage      String?
   lastMessageID    Int?
   messages         Int[]
@@ -29,9 +29,10 @@ model message {
   text         String
   ownerName    String
   ownerId      Int
-  reciever     Int
-  recieverName String
+  reciever     Int?
+  recieverName String?
   createdDate  DateTime @default(now())
+  chatId       Int?
 }
 
 model chat {
@@ -63,4 +64,9 @@ enum Courses {
   SMM
   Android
   undefined
+}
+
+enum TypeUser {
+  user
+  admin
 }

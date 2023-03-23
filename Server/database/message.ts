@@ -27,3 +27,27 @@ export async function removeMessageFromUserId(userID: number) {
     });
   }
 }
+
+
+export async function createmessage(
+  text: string,
+  ownerName: string,
+  ownerId: number,
+  reciever: number,
+  recieverName: string
+) {
+  return await prisma.message.create({ data: { ownerId, ownerName, reciever, recieverName, text } })
+}
+
+export async function editMessage(id: number, text: string, ownerName: string, ownerId: number, reciever: number, recieverName: string) {
+  return await prisma.message.update({ data: { text, recieverName, reciever, ownerId, ownerName }, where: { id } })
+}
+
+export async function createChatMessage(
+  text: string,
+  ownerName: string,
+  ownerId: number,
+  chatId: number
+) {
+  return await prisma.message.create({ data: { ownerId, ownerName, text, chatId } })
+}
