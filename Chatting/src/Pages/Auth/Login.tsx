@@ -1,20 +1,19 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { LoginAuth } from "../TypeScript/auth"
 import "./../Scss/style.scss"
-export default function LoginPage() {
+export function LoginPage({ setUser }: { setUser: (user: any) => void }) {
+    const navigate = useNavigate()
     let [number, setNumber] = useState("")
     let [password, setPassword] = useState("")
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
             if (number && password) {
                 const result = await LoginAuth(number, password)
                 if (result !== "Please fill all the gaps!") {
-                    alert(result.data.message)
-                    let token = result.data.user
-                    localStorage.setItem("hello", token)
-                    return window.location.href = '/'
+                    setUser(result)
+                    navigate('/')
                 } else {
                     alert(result)
                 }

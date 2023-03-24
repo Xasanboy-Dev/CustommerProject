@@ -1,4 +1,5 @@
 import axios from "axios";
+import { createContext } from "react";
 
 export async function RegisterAuth(
   name: string,
@@ -28,7 +29,7 @@ export async function LoginAuth(phoneNumber: string, password: string) {
       password,
       phoneNumber,
     });
-    return result;
+    return result.data.user;
   } else {
     return "Please fill all the gaps!";
   }

@@ -277,6 +277,15 @@ body {
                         }
                         .messageInfo {
                             margin: 0px 0px 0px 20px;
+                            .name {
+                                font-size: 15px;
+                                color: black;
+                                padding: 2px 5px;
+                                border: 2px solid black;
+                                display: flex;
+                                align-items: center;
+                                border-radius: 5px;
+                            }
                         }
                     }
                 }

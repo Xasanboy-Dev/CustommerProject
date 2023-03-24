@@ -121,18 +121,18 @@ export async function LoginUer(req: Request, res: Response) {
       const user = await getUserByPhoneNumber(phoneNumber);
       if (user) {
         if (await ComparePassword(password, user.password)) {
-          let token = SignToken(
-            user.id,
-            user.name,
-            user.lastname,
-            user.phoneNumber,
-            user.role,
-            user.lastMessage!,
-            user.lastMessageID!,
-            user.messages,
-            user.connectedCourses,
-            user.connectedChats
-          );
+          let token = {
+            id: user.id,
+            name: user.name,
+            lastname: user.lastname,
+            number: user.phoneNumber,
+            role: user.role,
+            lastMessage: user.lastMessage,
+            lastMessageID: user.lastMessageID!,
+            messages: user.messages,
+            connectedCourses: user.connectedCourses,
+            connectedChats: user.connectedChats,
+          };
           return res.status(200).json({ message: "All right", user: token });
         } else {
           return res.status(400).json({ message: "You have some probelems!" });
