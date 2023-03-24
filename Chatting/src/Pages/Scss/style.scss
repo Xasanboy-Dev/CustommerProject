@@ -61,6 +61,14 @@ $darkColor: #2f2c53;
             &::placeholder {
                 color: rgb(127, 127, 127);
             }
+            .label {
+                display: flex;
+                justify-content: center;
+                .image {
+                    width: 25%;
+                    border-radius: 5%;
+                }
+            }
         }
         button {
             background-color: blue;

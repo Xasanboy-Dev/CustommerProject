@@ -1,14 +1,15 @@
 import { Router } from "express";
 import {
-    getAllUsers,
-    getOneUserById,
-    addUser
-} from "../database/user";
+  createUser,
+  getUserById,
+  getUsers,
+  updateUser,
+} from "../controller/user";
 const router = Router();
 
-router.get("/all", getAllUsers)
-router.get("/:id", getOneUserById)
-router.post('/', addUser)
+router.get("/all", getUsers);
+router.get("/:id", getUserById);
+router.post("/", createUser);
+router.put("/:id", updateUser);
 
-
-export default router
+export default router;

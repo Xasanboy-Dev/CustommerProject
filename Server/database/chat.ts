@@ -24,9 +24,9 @@ export async function removeUserFromChat(userID: number, chatID: number) {
 }
 
 export async function createChat(type: Type, users: number[]) {
-  return await prisma.chat.create({ data: { type, users } })
+  return await prisma.chat.create({ data: { type, users } });
 }
 
 export async function editChat(messages: string, users: number[], id: number) {
-  return await prisma.chat.update({ data: { messages, users }, where: { id } })
+  return await prisma.chat.update({ data: { messages, users }, where: { id } });
 }
