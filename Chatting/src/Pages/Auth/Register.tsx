@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { auth } from "../TypeScript/firebase";
 import { GoogleAuthProvider, signInWithPhoneNumber, signInWithPopup } from "firebase/auth";
-import {} from "firebase/auth"
+import { } from "firebase/auth"
+import { RegisterAuth } from "../TypeScript/auth";
 export default function Register() {
     let [name, setName] = useState("")
     let [lastname, setLastname] = useState("")
@@ -30,23 +31,29 @@ export default function Register() {
         }
     }, [file])
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        signInWithPhoneNumber(auth, PhoneNumber, )
-            .then(res => {
-                console.log(res)
-            }).catch(err => {
-                console.log(err)
-            })
-        if (name && lastname && PhoneNumber && password) {
-            if (name.length < 3 || lastname.length < 3 || PhoneNumber.length < 12 && password.length < 4) {
-                return alert("Your data must n't shorter than 3")
+        try {
+            if (name && lastname && PhoneNumber && password) {
+                if (name.length < 3 || lastname.length < 3 || PhoneNumber.length < 12 && password.length < 4) {
+                    return alert("Your data must n't shorter than 3")
+                } else {
+                    const result = await RegisterAuth(name, lastname, PhoneNumber, password, file)
+                    if (result) {
+                        if (result.status == 201) {
+                            alert("Created sucesfully!")
+                            return window.location.href = '/login'
+                        } else {
+                            return alert(result.data.message)
+                        }
+                    }
+                }
             } else {
-
+                alert("Please fill all the gaps!")
+                return null
             }
-        } else {
-            alert("Please fill all the gaps!")
-            return null
+        } catch (error: any) {
+            alert(`This user is already registered!`)
         }
     }
 

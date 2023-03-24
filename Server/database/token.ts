@@ -1,3 +1,4 @@
+import { TypeUser } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -6,9 +7,8 @@ export function SignToken(
   id: number,
   name: string,
   lastname: string,
-  email: string,
   phoneNumber: string,
-  role: string[],
+  role: TypeUser,
   lastMessage: string,
   lastMessageID: number,
   messages: number[],
@@ -19,7 +19,6 @@ export function SignToken(
     id,
     name,
     lastname,
-    email,
     phoneNumber,
     role,
     lastMessage,
