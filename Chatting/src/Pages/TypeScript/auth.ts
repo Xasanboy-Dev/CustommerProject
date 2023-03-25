@@ -1,6 +1,4 @@
 import axios from "axios";
-import { createContext } from "react";
-
 export async function RegisterAuth(
   name: string,
   lastname: string,

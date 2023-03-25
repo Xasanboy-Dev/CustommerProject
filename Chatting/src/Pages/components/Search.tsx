@@ -4,7 +4,7 @@ export default function Search() {
     let [input, setInput] = useState("")
 
     if (input) {
-
+          
     }
 
     return (

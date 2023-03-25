@@ -1,14 +1,11 @@
 import { useContext } from "react"
-import { UserContext } from "./../../App"
 import Input from "./Input"
 import Messages from "./Messages"
 export default function Chat() {
-    const user = useContext(UserContext)
-    console.log(user)
     return (
         <div className="chat">
             <div className="chatInfo">
-                <span>{user}</span>
+                <span>Xasanboy</span>
                 <div className="chatIcons">
                     <i className="bi bi-person-fill-add"></i>
                     <i className="bi bi-camera-video-fill"></i>

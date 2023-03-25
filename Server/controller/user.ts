@@ -1,7 +1,6 @@
-import e, { Request, Response } from "express";
-import { removeMessageWithId } from "../database/message";
-import { ComparePassword } from "../database/password";
-import { SignToken, VerifyToken } from "../database/token";
+import { Request, Response, text } from "express";
+import { ComparePassword } from "../database/Auth/password";
+import { SignToken, VerifyToken } from "../database/Auth/token";
 import {
   addUser,
   editUser,
@@ -9,6 +8,7 @@ import {
   getOneUserById,
   getUserByPhoneNumber,
 } from "../database/user";
+import { editComment, findCommentById } from "../database/Comment/comment";
 
 export async function getUsers(req: Request, res: Response) {
   try {
@@ -121,18 +121,18 @@ export async function LoginUer(req: Request, res: Response) {
       const user = await getUserByPhoneNumber(phoneNumber);
       if (user) {
         if (await ComparePassword(password, user.password)) {
-          let token = {
-            id: user.id,
-            name: user.name,
-            lastname: user.lastname,
-            number: user.phoneNumber,
-            role: user.role,
-            lastMessage: user.lastMessage,
-            lastMessageID: user.lastMessageID!,
-            messages: user.messages,
-            connectedCourses: user.connectedCourses,
-            connectedChats: user.connectedChats,
-          };
+          let token = SignToken(
+            user.id,
+            user.name,
+            user.lastname,
+            user.phoneNumber,
+            user.role,
+            user.lastMessage!,
+            user.lastMessageID!,
+            user.messages,
+            user.connectedCourses,
+            user.connectedChats
+          )
           return res.status(200).json({ message: "All right", user: token });
         } else {
           return res.status(400).json({ message: "You have some probelems!" });
@@ -161,5 +161,51 @@ export async function checkTokenValid(req: Request, res: Response) {
   } catch (error: any) {
     console.log(error.message);
     res.status(500).json({ message: "Intermal error" });
+  }
+}
+
+
+export async function getCommentByUserId(req: Request, res: Response) {
+  try {
+    const token = req.headers.authorization
+    const { userID } = req.body
+    if (token) {
+      const ValidateToken = VerifyToken(token)
+      const user = await getOneUserById(+userID)
+      if (user) {
+        const comments = await findCommentById(user.id)
+        return res.status(200).json({ message: "All comments", comments })
+      } else {
+        return res.status(404).json({ message: "Your user is not exist!" })
+      }
+    } else {
+      return res.status(401).json({ message: "You must to login!" })
+    }
+  } catch (error: any) {
+    console.log(error.message)
+    res.status(500).json({ message: "Internal error" })
+  }
+}
+
+export async function editCommentByUserId(req: Request, res: Response) {
+  try {
+    const token = req.headers.authorization
+    const { userId, commentId, text } = req.body
+    if (token && userId && commentId && text) {
+      const user = await getOneUserById(+userId)
+      const comment = await findCommentById(+commentId)
+      const ValidateToken = VerifyToken(token)
+      if (user && comment) {
+        const editedComment = await editComment(comment.id, text, comment.likes)
+        return res.status(200).json({ message: "Comment edited succesfully", comment: editedComment })
+      } else {
+        return res.status(404).json({ message: "You have some problems!" })
+      }
+    } else {
+      return res.status(401).json({ messahe: "Yoiu must to login!" })
+    }
+  } catch (error: any) {
+    console.log(error.message)
+    res.status(500).json({ message: "You must to login!" })
   }
 }

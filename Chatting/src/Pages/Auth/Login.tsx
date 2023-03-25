@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, createContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { LoginAuth } from "../TypeScript/auth"
 import "./../Scss/style.scss"
-export function LoginPage({ setUser }: { setUser: (user: any) => void }) {
+export function LoginPage() {
+    let [user, setUser] = useState("")
     const navigate = useNavigate()
     let [number, setNumber] = useState("")
     let [password, setPassword] = useState("")
@@ -13,6 +14,7 @@ export function LoginPage({ setUser }: { setUser: (user: any) => void }) {
                 const result = await LoginAuth(number, password)
                 if (result !== "Please fill all the gaps!") {
                     setUser(result)
+                    localStorage.setItem('hello', result)
                     navigate('/')
                 } else {
                     alert(result)

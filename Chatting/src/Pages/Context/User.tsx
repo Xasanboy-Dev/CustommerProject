@@ -1,17 +1,24 @@
-
-
 import { createContext } from "react";
-
-
- let user = ""
-
-
- export function getuser(user: any) {
-    user = user
-}
-
-export const UserContext = createContext(user)
-
-export const UserContextProvider = ({ children }: { children: any }) => {
-    return <UserContext.Provider value={user} >{children}</UserContext.Provider>
-} 
+export const UserContext = createContext<{
+    id: number,
+    name: string,
+    lastname: string,
+    phoneNumber: string,
+    role: "admin" | "user",
+    lastMessage: string,
+    lastMessageID: number,
+    messages: number[],
+    connectedCourses: number[],
+    connectedChats: number[]
+}>({
+    id: 0,
+    name: "",
+    lastname: "",
+    phoneNumber: "",
+    role: "admin",
+    lastMessage: "",
+    lastMessageID: 0,
+    messages: [],
+    connectedCourses: [],
+    connectedChats: []
+})
