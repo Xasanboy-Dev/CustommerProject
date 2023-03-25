@@ -48,13 +48,13 @@ enum Type {
 }
 
 model course {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
-  type        Courses  @default(undefined)
+  type        Courses   @default(undefined)
   teacherName String
   teacherId   Int
   pupils      Int[]
-  createdDate DateTime @default(now())
+  createdDate DateTime  @default(now())
   deadTime    DateTime? @default(now())
 }
 
@@ -96,4 +96,28 @@ model comment {
   text        String
   createdDate DateTime @default(now())
   likes       Int[]
+}
+
+model Videos {
+  id          Int      @id @default(autoincrement())
+  ownerName   String
+  ownerId     Int
+  comments    Int[]
+  createdDate DateTime @default(now())
+  for         PostType @default(course)
+}
+
+model Image {
+  id          Int      @id @default(autoincrement())
+  ownerName   String
+  ownerId     Int
+  comments    Int[]
+  createdDate DateTime @default(now())
+  for         PostType @default(course)
+}
+
+enum PostType {
+  public
+  course
+  chat
 }

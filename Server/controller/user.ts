@@ -96,7 +96,8 @@ export async function updateUser(req: Request, res: Response) {
           lastMessageID ? lastMessageID : user.lastMessageID,
           messages ? messages : user.messages,
           connectedChats ? connectedChats : user.connectedChats,
-          password ? password : user.password
+          password ? password : user.password,
+          user.comments
         );
         return res
           .status(200)
